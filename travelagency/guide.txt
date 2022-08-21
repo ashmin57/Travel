@@ -1,0 +1,6 @@
+1. take registration modals from bootstrap or create registration form
+2. validate registration form
+3. take login modals from bootstrap or create login form
+4. validate login from
+5. create database designs with help of other previous project
+6. 
