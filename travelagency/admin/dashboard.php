@@ -31,25 +31,25 @@
             </li>
             <li>
                 <a href="packageadd.php">
-                    <i class='bx bxs-shopping-bag-alt'></i>
+                <i class='bx bxs-doughnut-chart'></i>
                     <span class="text">Tour Packages</span>
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class='bx bxs-doughnut-chart'></i>
+                <a href="manage-users.php">
+                <i class='bx bxs-group'></i>
                     <span class="text">Manage Users</span>
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class='bx bxs-message-dots'></i>
+                <a href="manage-bookings.php">
+                <i class='bx bxs-doughnut-chart'></i>
                     <span class="text">Manage Booking</span>
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <i class='bx bxs-group'></i>
+                <i class='bx bxs-message-dots'></i>
                     <span class="text">Manage Enquiries</span>
                 </a>
             </li>
@@ -74,14 +74,7 @@
     <section id="content">
         <!-- NAVBAR -->
         <nav>
-            <i class='bx bx-menu'></i>
-            <a href="#" class="nav-link">Categories</a>
-            <form action="#">
-                <div class="form-input">
-                    <input type="search" placeholder="Search...">
-                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
-                </div>
-            </form>
+            
           
         </nav>
         <!-- NAVBAR -->
@@ -118,7 +111,7 @@
                     </div>
 
                         </h3>
-                        <div class="card-name"><a href="../userdetail.php">User Detail</div>
+                        <div class="card-name">No. of Users</div>
                     </span>
                 </li>
                 <li>

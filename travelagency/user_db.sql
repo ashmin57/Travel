@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 21, 2022 at 04:47 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Aug 25, 2022 at 03:55 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,13 +40,12 @@ CREATE TABLE `packages` (
 --
 
 INSERT INTO `packages` (`id`, `Place`, `description`, `cost`, `images`) VALUES
-(1, 'Dubai', '3 NIGHTS | 4 DAYS', 50000, 'Dubai.jpg'),
-(2, 'Los Angeles', '5 NIGHTS | 6 DAYS', 70000, 'la.jpg'),
-(3, 'Thailand', '6 NIGHTS | 7 DAYS', 20000, 'th.jpg'),
-(4, 'Maldives', '3 NIGHTS | 4 DAYS', 45000, 'Maldives.jpg'),
-(5, 'Singapore', '4 NIGHTS | 5 DAYS', 55000, 'singapore.jpg'),
-(6, 'Australia', '4 NIGHTS | 5 DAYS', 55000, 'abc.jpg'),
-(7, 'Bali', '2 Night | 3 Days', 60000, 'bali.jpeg');
+(1, 'Dubai', '3 Night | 2 Days', 50000, 'Dubai.jpg'),
+(2, 'Los Angeles', '2 Night | 3 Days', 70000, 'la.jpg'),
+(3, 'Bali', '4 Night | 5 Days', 45000, 'bali.jpeg'),
+(4, 'Maldives', '4 Night | 5 Days', 45000, 'Maldives.jpg'),
+(5, 'Singapore', '3 Night | 4 Days', 60000, 'singapore.jpg'),
+(6, 'Thailand', '5 Night | 6 Days', 40000, 'th.jpg');
 
 -- --------------------------------------------------------
 
@@ -57,15 +56,19 @@ INSERT INTO `packages` (`id`, `Place`, `description`, `cost`, `images`) VALUES
 CREATE TABLE `reservation` (
   `res_id` int(11) NOT NULL,
   `res_date` date NOT NULL,
-  `res_name` varchar(50) NOT NULL
+  `res_name` varchar(50) NOT NULL,
+  `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `reservation`
 --
 
-INSERT INTO `reservation` (`res_id`, `res_date`, `res_name`) VALUES
-(1, '2022-08-30', 'hari');
+INSERT INTO `reservation` (`res_id`, `res_date`, `res_name`, `id`) VALUES
+(6, '2022-08-26', 'nova', 3),
+(7, '2022-08-26', 'nova', 3),
+(8, '2022-09-09', 'vdsgfxc', 3),
+(9, '2022-09-09', 'cfjhgv', 3);
 
 -- --------------------------------------------------------
 
@@ -92,7 +95,8 @@ INSERT INTO `user_form` (`id`, `name`, `email`, `password`, `user_type`) VALUES
 (13, 'nova', 'nova@mail.com', 'cc03e747a6afbbcbf8be7668acfebee5', 'user'),
 (14, 'inima', 'admin@admin.com', '1844156d4166d94387f1a4ad031ca5fa', 'user'),
 (15, 'indra', 'indra@gmail.com', 'e24f6e3ce19ee0728ff1c443e4ff488d', 'user'),
-(16, 'admin', 'admin@gmail.com', 'admin', 'admin');
+(16, 'admin', 'admin@gmail.com', 'admin', 'admin'),
+(17, 'user2', 'user2@mail.com', 'test123', 'user');
 
 --
 -- Indexes for dumped tables
@@ -130,13 +134,23 @@ ALTER TABLE `packages`
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `res_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `res_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `user_form`
 --
 ALTER TABLE `user_form`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `reservation`
+--
+ALTER TABLE `reservation`
+  ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`id`) REFERENCES `packages` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

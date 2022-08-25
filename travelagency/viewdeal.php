@@ -1,13 +1,62 @@
 <?php
 session_start();
-include_once"config.php";
+if (!isset($_SESSION['user_name'])) {
+    // header("Location:login_form.php");
+    echo "<script>window.location.href='';</script>";
+    // if it is logged in already then it will send to the view deal page else they must login first
+}
+include_once "config.php";
 
 if(isset($_POST["Book"])){
     $name = $_POST["name"];
-    $date = $_POST["date"];
+    $date= strtotime($_POST["date"]);
+    $date = date('Y-m-d',$date);
+    $mid = $_POST['id'];
 
-    $sql = "insert into reservation (res_name, res_date) values ('$name','$date')";
-    mysqli_query($conn,$sql);
+    function insert_booking($name,$date,$mid){
+        global $conns;
+        $sql="INSERT INTO reservation(res_name,res_date,id) VALUES(?,?,?)";
+        $stmt = $conns->prepare($sql);
+        $stmt->execute(array($name,$date,$mid));
+        // $statement->execute([
+        //     'fname' => 'Bob',
+        //     'sname' => 'Desaunois',
+        //     'age' => '18',
+        // ]);
+        // $reservations = $stmt->fetchAll();
+        $stmt->closeCursor();
+    // return $reservations;
+      }
+    //   $statement->execute([
+    //     'fname' => 'Bob',
+    //     'sname' => 'Desaunois',
+    //     'age' => '18',
+    // ]);
+
+
+//     echo "<br>".$name."<br>";
+//     echo $date."<br>";
+//     echo $mid."<br>";
+//     // die();
+// var_dump($name);
+// var_dump($date);
+// var_dump($mid);
+
+try {
+    insert_booking($name,$date,$mid);
+} catch (Exception $e){
+    //throw $th;
+    echo $e->getMessage();
+    die();
+}
+    // $sql = "INSERT INTO `reservation`(`res_name`, `res_date`, `id`) VALUES($name,$date,$mid)";
+    // if ($con_obj->query($sql) === TRUE) {
+    // echo "New record created successfully";
+    // } else {
+    // echo "Error: " . $sql . "<br>" . $conn->error;
+    // }
+    // $sql = "INSERT INTO `reservation`(res_name, res_date, id) VALUES($name,$date,$mid)";
+    // mysqli_query($conn,$sql);
 }
 
 ?>
@@ -55,8 +104,53 @@ if(isset($_POST["Book"])){
         </div>
     </nav>
     
-    <form action="" method="post">
-        <input type="text" name="name" placeholder= "Enter your Name"> <br>
-        <input type="date" name="date" placeholder="Date"> <br>
-       <button name="Book">Book</button>
+    <form name="booking" action="" method="post" onsubmit="return validate()">
+        <?php 
+            if(isset($_GET['id'])){
+                $main_id = $_GET['id'];
+                $sql = mysqli_query($conn, "SELECT * FROM packages WHERE id = $main_id");
+                while($main_result = mysqli_fetch_assoc($sql)){
+        ?>
+        <div class="card" style="width: 18rem;">
+        <br>
+        
+                    <img src="images/<?= $main_result['images'] ?>" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"><?= $main_result['Place'] ?></h5>
+                        <p class="card-text"><?= $main_result['description'] ?></p>
+                        <p class="card-text"><?= $main_result['cost'] ?></p>
+                        
+                    </div>
+                </div>
+        <input type="hidden" name="id" value="<?=$main_result['id']?>" > <br>
+        <?php }
+            } ?>
+        <input type="text" name="name" placeholder= "Enter your Name" id ="name"> <br>
+        <input type="date" name="date" placeholder="Date" id="date"> <br>
+       <button name="Book" value="submit">Book</button>
     </form>
+    <script>
+        function validate(){
+            var name = document.booking.name;
+            var letters = /^[A-Za-z_ -]+$/;
+            if (name.value.match(letters)){
+                return true;
+            }
+            else{
+                alert('Fullname must have alphabet characters only');
+                name.focus();
+                return false;
+            }
+            var UserDate = document.getElementById("date").value;
+            var ToDate = new Date();
+
+            if (new Date(UserDate).getTime() <= ToDate.getTime()) {
+                alert("The Date must be Bigger or Equal to today date");
+                return false;
+            }
+            alert("Booking has been Success");
+            return true;
+        }
+    
+
+    </script>

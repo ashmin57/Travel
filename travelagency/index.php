@@ -1,5 +1,8 @@
 <?php
 session_start();
+// if (!empty( $_SESSION['user_name'])) {
+//     header("Location:index.php");// if it is logged in already then it will send to the view deal page else they must login first
+// }
 include_once"config.php";
 ?>
 <html>
@@ -45,7 +48,6 @@ include_once"config.php";
             </ul>
         </div>
     </nav>
-
     <section id="tourpackage">
         <div id="tourpackage" class="carousel slide" data-ride="carousel">
             <ul class="carousel-indicators">
@@ -90,15 +92,13 @@ include_once"config.php";
         <div>
             <h3 class="text-center">Tour package information</h3>
         </div>
-        <div class="container">
-        <h3>Select Package</h3>
+        <div class="container"><br>
+        <h3 class="text-center">Select Package</h3>
         <div class="row">
         <?php 
             $sql = "select * from packages";
             $sqlRun = mysqli_query($conn,$sql);
             while($pack = mysqli_fetch_assoc($sqlRun)){
-
-             
 
         ?>
             <div class="col-md-4">
@@ -108,7 +108,7 @@ include_once"config.php";
                         <h5 class="card-title"><?= $pack['Place'] ?></h5>
                         <p class="card-text"><?= $pack['description'] ?></p>
                         <p class="card-text"><?= $pack['cost'] ?></p>
-                        <a href="viewdeal.php" class="btn btn-primary">Book</a>
+                        <a href="viewdeal.php?id='<?= $pack['id']?>'" class="btn btn-primary">Book</a>
                     </div>
                 </div>
             </div>
